@@ -45,7 +45,7 @@
 
 
 - (id)initWithOrigin:(CGPoint)origin width:(CGFloat)width;
-- (id)initWithOrigin:(CGPoint)origin width:(CGFloat)width mulipleCount:(NSInteger)multiplier;
+- (id)initWithOrigin:(CGPoint)origin width:(CGFloat)width multipleCount:(NSInteger)multiplier;
 /**
  *  开始或继续动画
  */
