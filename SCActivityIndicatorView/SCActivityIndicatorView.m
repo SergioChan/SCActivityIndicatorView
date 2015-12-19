@@ -26,7 +26,7 @@
 
 @implementation SCActivityIndicatorView
 
-- (id)initWithOrigin:(CGPoint)origin width:(CGFloat)width mulipleCount:(NSInteger)multiplier
+- (id)initWithOrigin:(CGPoint)origin width:(CGFloat)width multipleCount:(NSInteger)multiplier
 {
     assert(multiplier>0);
     self = [super initWithFrame:CGRectMake(origin.x, origin.y, width * multiplier, width)];
