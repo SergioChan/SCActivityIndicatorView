@@ -243,17 +243,18 @@
 {
     UIColor *color = self.customColor;
     
+    int t = abs((int)i-(int)index);
     if(_multiMode == NO)
     {
         // Effect For single indicators. Different for multiple indicators together.
         const CGFloat *components = CGColorGetComponents(color.CGColor);
         if(index <= 3 || index >= 9)
         {
-            if(abs((int)i-(int)index) == 1 || abs((int)index - (int)i) == 11)
+            if(t == 1 || t == 11)
             {
                 color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
             }
-            else if(abs((int)i-(int)index) == 2 || abs((int)index - (int)i) == 10)
+            else if(t == 2 || t == 10)
             {
                 color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
             }
@@ -261,7 +262,7 @@
             {
                 color = self.customColor;
             }
-            else if((abs((int)i-(int)index) == 3 || abs((int)index - (int)i) == 9) || (abs((int)i-(int)index) == 4 || abs((int)index - (int)i) == 8))
+            else if((t == 3 || t == 9) || (t == 4 || t == 8))
             {
                 color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
             }
@@ -272,11 +273,11 @@
         }
         else
         {
-            if(abs((int)i-(int)index) == 1)
+            if(t == 1)
             {
                 color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
             }
-            else if(abs((int)i-(int)index) == 2)
+            else if(t == 2)
             {
                 color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
             }
@@ -284,7 +285,7 @@
             {
                 color = self.customColor;
             }
-            else if(abs((int)i-(int)index) == 3 || abs((int)i-(int)index) == 4)
+            else if(t == 3 || t == 4)
             {
                 color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
             }
@@ -299,11 +300,11 @@
         const CGFloat *components = CGColorGetComponents(color.CGColor);
         if(index <= 3 || index >= (NUMBER_OF_LOOP - 1) * _multiplier - 3)
         {
-            if(abs((int)i-(int)index) == 1 || abs((int)index - (int)i) == (NUMBER_OF_LOOP - 1) * _multiplier - 1)
+            if(t == 1 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 1)
             {
                 color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
             }
-            else if(abs((int)i-(int)index) == 2 || abs((int)index - (int)i) == (NUMBER_OF_LOOP - 1) * _multiplier - 2)
+            else if(t == 2 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 2)
             {
                 color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
             }
@@ -311,7 +312,7 @@
             {
                 color = self.customColor;
             }
-            else if((abs((int)i-(int)index) == 3 || abs((int)index - (int)i) == (NUMBER_OF_LOOP - 1) * _multiplier - 3) || (abs((int)i-(int)index) == 4 || abs((int)index - (int)i) == (NUMBER_OF_LOOP - 1) * _multiplier - 4))
+            else if((t == 3 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 3) || (t == 4 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 4))
             {
                 color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
             }
@@ -322,11 +323,11 @@
         }
         else
         {
-            if(abs((int)i-(int)index) == 1)
+            if(t == 1)
             {
                 color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
             }
-            else if(abs((int)i-(int)index) == 2)
+            else if(t == 2)
             {
                 color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
             }
@@ -334,7 +335,7 @@
             {
                 color = self.customColor;
             }
-            else if(abs((int)i-(int)index) == 3 || abs((int)i-(int)index) == 4)
+            else if(t == 3 || t == 4)
             {
                 color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
             }
