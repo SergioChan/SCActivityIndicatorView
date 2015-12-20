@@ -7,7 +7,7 @@
 //
 
 #import "SCActivityIndicatorView.h"
-#define NUMBER_OF_LOOP 13
+#define NUMBER_OF_LOOP 12
 
 @interface SCActivityIndicatorView()
 {
@@ -16,10 +16,7 @@
     CGFloat _indicatorLength;
     CGFloat _indicatorRadius;
     CGPoint _indicatorCenterPoint;
-    /**
-     *  是否进入多个菊花的模式
-     */
-    BOOL _multiMode;
+
     NSInteger _multiplier;
 }
 @end
@@ -36,9 +33,8 @@
         self.loopDuration = 1.5f * multiplier;
         self.animating = NO;
         self.hideWhenStopped = NO;
-        _multiMode = YES;
         self.alpha = 0.0f;
-        self.startDegree = 0.0f;
+        self.startDegree = -360.0f;
         _multiplier = multiplier;
         
         _indicatorWidth = width;
@@ -59,7 +55,6 @@
         self.loopDuration = 1.5f;
         self.animating = NO;
         self.hideWhenStopped = NO;
-        _multiMode = NO;
         self.alpha = 0.0f;
         self.startDegree = 0.0f;
         _multiplier = 1;
@@ -81,11 +76,10 @@
     CGFloat startDegree = self.startDegree;
     BOOL verse = YES;
     
-    for(NSInteger i=0;i<NUMBER_OF_LOOP * _multiplier - 1;i++)
+    NSInteger circle_count = 1;
+    for(NSInteger i=0;i< NUMBER_OF_LOOP * _multiplier + 1;i++)
     {
-        NSLog(@"index:%ld, i:%ld",index,i);
-        
-        CGPoint currentCenter = CGPointMake(_indicatorWidth/2.0f + floorf(i/NUMBER_OF_LOOP) * ((_indicatorWidth/2.0f) + _marginRadius), _indicatorWidth/2.0f);
+        CGPoint currentCenter = CGPointMake(_indicatorWidth/2.0f + (circle_count - 1) * ((_indicatorWidth/2.0f) + _marginRadius), _indicatorWidth/2.0f);
         
         UIBezierPath *path = [UIBezierPath bezierPath];
         
@@ -117,10 +111,43 @@
      
         CGContextAddPath(context, path.CGPath);
         
-        if(startDegree == 360.0f)
+        
+        if(startDegree == 0.0f && verse == YES)
         {
-            startDegree = 180.0f;
-            verse = NO;
+            if(circle_count < _multiplier)
+            {
+                circle_count += 1;
+                startDegree = 180.0f;
+                verse = NO;
+            }
+        }
+        else if(startDegree == 0.0f && verse == NO)
+        {
+            if(circle_count < _multiplier)
+            {
+                circle_count += 1;
+                startDegree = -180.0f;
+                verse = YES;
+            }
+        }
+        else if(startDegree == -180.0f && verse == NO)
+        {
+            if(circle_count == _multiplier)
+            {
+                circle_count -= 1;
+                startDegree = 0.0f;
+                verse = YES;
+            }
+        }
+        else if(startDegree == 180.0f && verse == YES)
+        {
+            if(circle_count > 1)
+            {
+                circle_count -= 1;
+                startDegree = 0.0f;
+                verse = NO;
+                
+            }
         }
         
         if(verse)
@@ -219,7 +246,7 @@
 - (CAKeyframeAnimation *)loopAnimation
 {
     NSMutableArray *tmp = [NSMutableArray array];
-    for(NSInteger i=0;i<NUMBER_OF_LOOP * _multiplier - 1 ;i++)
+    for(NSInteger i=0;i<NUMBER_OF_LOOP * _multiplier + 1;i++)
     {
         [tmp addObject:(id)[self viewFrameImageWithIndex:i].CGImage];
     }
@@ -242,107 +269,53 @@
 - (UIColor *)fillColorForIndex:(NSInteger)index forViewIndex:(NSInteger)i
 {
     UIColor *color = self.customColor;
-    
     int t = abs((int)i-(int)index);
-    if(_multiMode == NO)
+    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    
+    if(index <= 3 || index >= NUMBER_OF_LOOP * _multiplier - 3)
     {
-        // Effect For single indicators. Different for multiple indicators together.
-        const CGFloat *components = CGColorGetComponents(color.CGColor);
-        if(index <= 3 || index >= 9)
+        if(t == 1 || t == NUMBER_OF_LOOP * _multiplier - 1)
         {
-            if(t == 1 || t == 11)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
-            }
-            else if(t == 2 || t == 10)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
-            }
-            else if(i == index)
-            {
-                color = self.customColor;
-            }
-            else if((t == 3 || t == 9) || (t == 4 || t == 8))
-            {
-                color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
-            }
-            else
-            {
-                color = [UIColor clearColor];
-            }
+            color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
+        }
+        else if(t == 2 || t == NUMBER_OF_LOOP * _multiplier - 2)
+        {
+            color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
+        }
+        else if(i == index)
+        {
+            color = self.customColor;
+        }
+        else if((t == 3 || t == NUMBER_OF_LOOP  * _multiplier - 3) || (t == 4 || t == NUMBER_OF_LOOP * _multiplier - 4))
+        {
+            color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
         }
         else
         {
-            if(t == 1)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
-            }
-            else if(t == 2)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
-            }
-            else if(i == index)
-            {
-                color = self.customColor;
-            }
-            else if(t == 3 || t == 4)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
-            }
-            else
-            {
-                color = [UIColor clearColor];
-            }
+            color = [UIColor clearColor];
         }
     }
     else
     {
-        const CGFloat *components = CGColorGetComponents(color.CGColor);
-        if(index <= 3 || index >= (NUMBER_OF_LOOP - 1) * _multiplier - 3)
+        if(t == 1)
         {
-            if(t == 1 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 1)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
-            }
-            else if(t == 2 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 2)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
-            }
-            else if(i == index)
-            {
-                color = self.customColor;
-            }
-            else if((t == 3 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 3) || (t == 4 || t == (NUMBER_OF_LOOP - 1) * _multiplier - 4))
-            {
-                color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
-            }
-            else
-            {
-                color = [UIColor clearColor];
-            }
+            color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
+        }
+        else if(t == 2)
+        {
+            color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
+        }
+        else if(i == index)
+        {
+            color = self.customColor;
+        }
+        else if(t == 3 || t == 4)
+        {
+            color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
         }
         else
         {
-            if(t == 1)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.1f) green:(components[1]-0.1f) blue:(components[2]-0.1f) alpha:1.0f];
-            }
-            else if(t == 2)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.2f) green:(components[1]-0.2f) blue:(components[2]-0.2f) alpha:1.0f];
-            }
-            else if(i == index)
-            {
-                color = self.customColor;
-            }
-            else if(t == 3 || t == 4)
-            {
-                color = [UIColor colorWithRed:(components[0]-0.5f) green:(components[1]-0.5f) blue:(components[2]-0.5f) alpha:1.0f];
-            }
-            else
-            {
-                color = [UIColor clearColor];
-            }
+            color = [UIColor clearColor];
         }
     }
     return color;

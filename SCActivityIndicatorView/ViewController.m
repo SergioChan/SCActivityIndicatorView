@@ -10,7 +10,10 @@
 #import "SCActivityIndicatorView.h"
 
 @interface ViewController ()
-@property (nonatomic, strong) SCActivityIndicatorView *indicator;
+@property (nonatomic, strong) SCActivityIndicatorView *indicator_0;
+@property (nonatomic, strong) SCActivityIndicatorView *indicator_1;
+@property (nonatomic, strong) SCActivityIndicatorView *indicator_2;
+@property (nonatomic, strong) SCActivityIndicatorView *indicator_3;
 @end
 
 @implementation ViewController
@@ -18,22 +21,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.indicator = [[SCActivityIndicatorView alloc]initWithOrigin:CGPointMake(ScreenWidth/2.0f - 60.0f, ScreenHeight/2.0f - 30.0f) width:60.0f multipleCount:2.0f];
+    self.indicator_0 = [[SCActivityIndicatorView alloc]initWithOrigin:CGPointMake(ScreenWidth/2.0f - 120.0f, 100.0f) width:60.0f multipleCount:1];
+    self.indicator_1 = [[SCActivityIndicatorView alloc]initWithOrigin:CGPointMake(ScreenWidth/2.0f - 120.0f, 180.0f) width:60.0f multipleCount:2];
+    self.indicator_2 = [[SCActivityIndicatorView alloc]initWithOrigin:CGPointMake(ScreenWidth/2.0f - 120.0f, 260.0f) width:60.0f multipleCount:3];
+    self.indicator_3 = [[SCActivityIndicatorView alloc]initWithOrigin:CGPointMake(ScreenWidth/2.0f - 120.0f, 340.0f) width:60.0f multipleCount:4];
     //self.indicator.hideWhenStopped = YES;
     //self.indicator.customColor = [UIColor redColor];
     //self.indicator.loopDuration = 2.0f;
-    [self.view addSubview:self.indicator];
+    [self.view addSubview:self.indicator_0];
+    [self.view addSubview:self.indicator_1];
+    [self.view addSubview:self.indicator_2];
+    [self.view addSubview:self.indicator_3];
 }
 
 - (void)fuck
 {
-    if(self.indicator.isAnimating)
+    if(self.indicator_0.isAnimating)
     {
-        [self.indicator stopAnimating];
+        [self.indicator_0 stopAnimating];
     }
     else
     {
-        [self.indicator startAnimating];
+        [self.indicator_0 startAnimating];
+    }
+    if(self.indicator_1.isAnimating)
+    {
+        [self.indicator_1 stopAnimating];
+    }
+    else
+    {
+        [self.indicator_1 startAnimating];
+    }
+    if(self.indicator_2.isAnimating)
+    {
+        [self.indicator_2 stopAnimating];
+    }
+    else
+    {
+        [self.indicator_2 startAnimating];
+    }
+    if(self.indicator_3.isAnimating)
+    {
+        [self.indicator_3 stopAnimating];
+    }
+    else
+    {
+        [self.indicator_3 startAnimating];
     }
 }
 
