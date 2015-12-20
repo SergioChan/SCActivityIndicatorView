@@ -7,7 +7,7 @@ Something just for fun.
 (´o・┏ω┓・o｀) 求个star。
 
 ## 预览 Preview
-![image](https://raw.githubusercontent.com/SergioChan/SCActivityIndicatorView/master/banner_indicator.png)
+![image](https://raw.githubusercontent.com/SergioChan/SCActivityIndicatorView/master/banner.jpg)
 
 ![image](https://raw.githubusercontent.com/SergioChan/SCActivityIndicatorView/master/preview_wtf.gif)
 
