@@ -8,7 +8,7 @@ Something just for fun.
 
 ## 预览 Preview
 
-![image](https://raw.githubusercontent.com/SergioChan/SCActivityIndicatorView/master/preview/preview_a.gif)
+![image](https://raw.githubusercontent.com/SergioChan/SCActivityIndicatorView/master/preview_wtf.gif)
 
 
 ## 特别 Special
