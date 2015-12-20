@@ -28,10 +28,10 @@
     //self.indicator.hideWhenStopped = YES;
     //self.indicator.customColor = [UIColor redColor];
     //self.indicator.loopDuration = 2.0f;
-    [self.view addSubview:self.indicator_0];
+//    [self.view addSubview:self.indicator_0];
     [self.view addSubview:self.indicator_1];
-    [self.view addSubview:self.indicator_2];
-    [self.view addSubview:self.indicator_3];
+//    [self.view addSubview:self.indicator_2];
+//    [self.view addSubview:self.indicator_3];
 }
 
 - (void)fuck
